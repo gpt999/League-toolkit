@@ -111,5 +111,5 @@ function to_slot(ad_base, ad_bonus, ad_multi
     {
         return x.dps;
     };
-    slot.push(x)
+    slot.push(x);
 }
