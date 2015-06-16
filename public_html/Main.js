@@ -1,8 +1,8 @@
-var slot = [];
+var slot_stats = [];
 
-function new_slot()
+function slot_stats()
 {
-    to_slot(
+    slot_stats_new(
             parseFloat(document.getElementById("ad_base").value),
             parseFloat(document.getElementById("ad_bonus").value),
             parseFloat(document.getElementById("ad_multi").value),
@@ -17,11 +17,12 @@ function new_slot()
             );
 }
 
-function to_slot(ad_base, ad_bonus, ad_multi
+function slot_stats_new(ad_base, ad_bonus, ad_multi
 , crit_chance, crit_damage
-, pen_flat, pen_percent , reduction_flat, reduction_percent, target_resist) //store a saved total stats to one of the slots, also save some of the math portion for easier later use.
+, pen_flat, pen_percent , reduction_flat, reduction_percent) //store a saved total stats to one of the slots, also save some of the math portion for easier later use.
 {
     var x = {};
+    //base stats
     x.ad_base = ad_base;
     x.ad_bonus = ad_bonus;
     x.ad_multi = ad_multi;//ad multi only work on ad_bonus
@@ -29,87 +30,32 @@ function to_slot(ad_base, ad_bonus, ad_multi
     
     x.crit_chance = crit_chance;
     x.crit_damage = crit_damage;//asume the extra crit damage, not the total, so adding an IE would mean 0.5
-    x.multiplier_from_crit = math_crit_percent_increase(crit_chance, crit_damage);
+    
     
     x.pen_flat = pen_flat;
     x.pen_percent = pen_percent;
     x.reduction_flat = reduction_flat;
     x.reduction_percent = reduction_percent;
     
+    //math stuff below
+    x.multiplier_from_crit = math_crit_percent_increase(crit_chance, crit_damage);
     
     
     
-    x.get_ad_base = function()
-    {
-      return this.ad_base;  
+    x.get = {
+        ad_base:function(){return x.ad_base;},
+        ad_bonus:function(){return x.ad_bonus;},
+        ad_multi:function(){return x.ad_multi;},
+        ad_total:function(){return x.ad_total;},
+        
+        crit_chance:function(){return this.crit_chance;},
+        crit_damage:function(){return this.crit_damage;},
+        
+        pen_flat:function(){return this.pen_flat;},
+        pen_percent:function(){return this.pen_percent;},
+        reduction_flat:function(){return this.reduction_flat;},
+        reduction_percent:function(){return this.reduction_percent;}
     };
-    
-    x.get_ad_bonus = function()
-    {
-        return this.ad_bonus;
-    };
-    
-    x.get_ad_multi = function()
-    {
-        return this.ad_multi;
-    };
-    
-    x.get_ad_total = function()
-    {
-      return this.ad_total;  
-    };
-    
-    x.get_crit_chance = function()
-    {
-        return this.crit_chance;
-    };
-    
-    x.get_crit_damage = function()
-    {
-        return this.crit_damage;
-    };
-    x.get_pen_flat = function()
-    {
-        return this.pen_flat;
-    };
-    x.get_pen_percent = function()
-    {
-        return this.pen_percent;
-    };
-    x.get_reduction_flat = function()
-    {
-        return this.reduction_flat;
-    };
-    x.get_reduction_percent = function()
-    {
-        return this.reduction_percent;
-    };
-    
-    x.get_target_resist = function()
-    {
-        return x.target_resist;
-    };
-    x.get_target_resist_with_pen = function()
-    {
-        return x.target_resist_with_pen;
-    };
-    x.get_damage_after_pen = function()
-    {
-        return x.damage_after_pen;
-    };
-    
-    x.get_multiplier_from_pen = function()
-    {
-        return x.multiplier_from_pen;
-    };
-    x.get_multiplier_from_crit = function()
-    {
-        return x.multiplier_from_crit;
-    };
-    
-    x.get_dps = function()
-    {
-        return x.dps;
-    };
-    slot.push(x);
+
+    slot_stats.push(x);
 }
